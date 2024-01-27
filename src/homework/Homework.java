@@ -18,6 +18,14 @@ public class Homework {
     - Написать метод, принимающий список Person и возвращающий имена тех, кто старше 18 лет в виде такой строки:
     "At the moment John, and Ann, and Bill are of legal age".
     (имена и текст могут быть любыми, по вашему выбору, структура предложения должна сохраняться)
+
+       Задача 3
+    Написать метод, принимающий в качестве параметров две строки. Первая строка состоит из слов,
+    разделенных пробелом. Метод возвращает количество слов первой строки, начинающихся со второй строки
+    Пример : Первая строка "aaaaaaa cccc ab bbbbb a ff aaa"
+    Если вторая строка а, то ответ 4
+    Если вторая строка ааа, ответ 2
+    Если вторая строка aaaa, ответ 1
      */
     public static void main(String[] args) {
         Person person1 = new Person("John Snow", 22);
@@ -42,6 +50,10 @@ public class Homework {
 
         // TASK 2 (part2)
         System.out.println(getPersonsOver_18(personList));
+
+        // TASK 3
+        System.out.println(countStrings("i, item, in, inside, hide", "i") + " words starts with 'i'.");
+
     }
 
     public static Map<Integer, List<Person>> sortByAge (List<Person> personList){
@@ -51,12 +63,11 @@ public class Homework {
     }
 
     public static Optional<Integer> sumOfAges (List<Person> personList){
-        Optional <Integer> result = personList.stream()
+        return personList.stream()
                 .filter(n -> n.getAge()>18)
                 .map(Person::getAge)
                 .reduce((a, b)-> a + b);
-        // Не поняла, как сделать так, чтобы все это собиралось и возвращалось в виде простой переменной int
-        return result;
+        // Не поняла, как вернуть результат в виде простой переменной int
     }
 
     public static String getPersonsOver_18 (List<Person> personList){
@@ -65,5 +76,10 @@ public class Homework {
                 .map(Person::getName)
                 .collect
                 (Collectors.joining(", ","At the moment, these persons: "," - are of legal age."));
+    }
+
+    public static int countStrings (String string1, String string2){
+        String [] str = string1.split(" ");
+        return (int)Arrays.stream(str).filter(s ->s.startsWith(string2)).count();
     }
 }
